@@ -2,6 +2,9 @@ FROM elixir:alpine
 
 ENV NODE_VERSION 9.3.0
 
+LABEL maintainer="dot.kadza@gmail.com"
+LABEL version="1.3.0"
+
 RUN addgroup -g 1000 node \
     && adduser -u 1000 -G node -s /bin/sh -D node \
     && apk add --no-cache \
@@ -65,11 +68,10 @@ RUN apk add --no-cache --virtual .build-deps-yarn curl gnupg tar \
     && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz \
     && apk del .build-deps-yarn
 
-RUN mix local.hex --force
+RUN mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez
 
-RUN mix local.rebar --force
-
-RUN mix archive.install https://github.com/phoenixframework/archives/raw/master/phoenix_new.ez --force
+RUN mix local.hex --force \
+    && mix local.rebar --force
 
 RUN apk update && apk add --no-cache inotify-tools
 
