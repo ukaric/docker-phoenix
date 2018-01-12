@@ -68,10 +68,9 @@ RUN apk add --no-cache --virtual .build-deps-yarn curl gnupg tar \
     && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz \
     && apk del .build-deps-yarn
 
-RUN mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez
-
 RUN mix local.hex --force \
-    && mix local.rebar --force
+    && mix local.rebar --force \
+    && mix mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez
 
 RUN apk update && apk add --no-cache inotify-tools
 
