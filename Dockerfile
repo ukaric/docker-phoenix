@@ -7,9 +7,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV NODE_VERSION_MAJOR 9
 
 RUN mix local.hex --force \
-    && mix local.rebar --force
+    && mix local.rebar --force \
+    && mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez 
 
-RUN mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez 
 
 RUN curl -sL https://deb.nodesource.com/setup_${NODE_VERSION_MAJOR}.x | bash -
 
